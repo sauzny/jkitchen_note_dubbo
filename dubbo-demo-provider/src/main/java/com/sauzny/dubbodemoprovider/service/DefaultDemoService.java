@@ -1,6 +1,7 @@
 package com.sauzny.dubbodemoprovider.service;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.sauzny.dubbodemoapi.DemoService;
 
 @Service(
         version = "${demo.service.version}",

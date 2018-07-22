@@ -1,4 +1,4 @@
-package com.sauzny.dubbodemoprovider.service;
+package com.sauzny.dubbodemoapi;
 
 public interface DemoService {
 
