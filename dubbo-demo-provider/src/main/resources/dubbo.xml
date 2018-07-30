@@ -6,13 +6,32 @@
     http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
        
     <!--定义了提供方应用信息，用于计算依赖关系；在 dubbo-admin 或 dubbo-monitor 会显示这个名字，方便辨识-->
-    <!-- owner="programmer" organization="dubbox" -->
+    <!-- owner="xxx" organization="xxx" -->
     <dubbo:application name="dubbo-provider-demo" />
     <!--使用 zookeeper 注册中心暴露服务，注意要先开启 zookeeper-->
     <dubbo:registry protocol="zookeeper" client="curator" address="192.168.73.201:2181,192.168.73.202:2181,192.168.73.203:2181"/>
     <!-- 用dubbo协议在12345端口暴露服务 -->
-    <dubbo:protocol name="dubbo" port="12345" />
-    <!--使用 dubbo 协议实现定义好的 api.PermissionService 接口-->
-    <dubbo:service interface="com.sauzny.dubbodemoapi.DemoService" ref="demoServiceImpl" protocol="dubbo" version="1.0.0"/>
+    <dubbo:protocol name="dubbo" port="12345" threads="8"/>
+    <!--使用 dubbo 协议实现定义好的 com.sauzny.dubbodemoapi.DemoService 接口-->
+    <dubbo:service 
+	    interface="com.sauzny.dubbodemoapi.DemoService" 
+	    ref="demoServiceImpl" 
+	    protocol="dubbo" 
+	    version="1.0.0"
+    	timeout="300"
+    	retries="2" 
+    	loadbalance="random" 
+    	actives="0"
+    >
+    	<!-- 在method中为某个方法单独配置属性 -->
+    	<!-- 
+    	<dubbo:method name="findAllPerson1" timeout="10000" retries="9" loadbalance="leastactive" actives="5" />
+    	<dubbo:method name="findAllPerson2" executes="50" />
+    	 -->
+    </dubbo:service>
+    
+	<!-- 此处配合dubbo-monitor-simple使用 -->
+	<!-- 如果为protocol="registry"，表示从注册中心发现监控中心地址，否则直连监控中心。 -->
+	<dubbo:monitor protocol="registry"/>  
     
 </beans>

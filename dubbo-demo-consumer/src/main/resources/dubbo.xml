@@ -14,5 +14,9 @@
 	
 	<!-- remote service -->
     <dubbo:reference id="demoService" check="false" interface="com.sauzny.dubbodemoapi.DemoService" version="1.0.0"/>
+	
+	<!-- 此处配合dubbo-monitor-simple使用 -->
+	<!-- 如果为protocol="registry"，表示从注册中心发现监控中心地址，否则直连监控中心。 -->
+	<dubbo:monitor protocol="registry"/>
 
 </beans>
